@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>axios</title>
+</head>
+<style>
+    .image-box{
+        padding: 30px;
+    }
+    .box-1 h6{
+       font-size: 14px ;
+    }
+   .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: black !important;
+    background-color: transparent !important;
+}
+</style>
+<body>
+
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="col-12 d-flex gap-3" style="margin-top: 60px; margin-bottom:30px;">
+                    <ul class="nav nav-pills d-flex gap-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a href="#" class="nav-link  buttons pt-3 pb-3 active" id="pills-home-tab"
+                                data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab"
+                                aria-controls="pills-home" aria-selected="true">all products</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link buttons pt-3 pb-3" id="pills-profile-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                                aria-selected="false">men's clothing</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link buttons pt-3 pb-3" id="pills-profile-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-profile2" type="button" role="tab" aria-controls="pills-profile"
+                                aria-selected="false">women's clothing</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link buttons pt-3 pb-3" id="pills-profile-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-profile3" type="button" role="tab" aria-controls="pills-profile"
+                                aria-selected="false">electronics</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link buttons pt-3 pb-3" id="pills-profile-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-profile4" type="button" role="tab" aria-controls="pills-profile"
+                                aria-selected="false">jewelery</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                        aria-labelledby="pills-home-tab" tabindex="0">
+                        <div class="row gy-4" id="row-1">
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
+                        tabindex="0">
+                        <div class="row" id="row-2">
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-profile2" role="tabpanel" aria-labelledby="pills-profile-tab"
+                        tabindex="0">
+                        <div class="row" id="row-3">
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-profile3" role="tabpanel" aria-labelledby="pills-profile-tab"
+                        tabindex="0">
+                        <div class="row" id="row-4">
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-profile4" role="tabpanel" aria-labelledby="pills-profile-tab"
+                        tabindex="0">
+                        <div class="row" id="row-5">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var row1 = document.getElementById("row-1")
+        var row2 = document.getElementById("row-2")
+        var row3 = document.getElementById("row-3")
+        var row4 = document.getElementById("row-4")
+        var row5 = document.getElementById("row-5")
+
+        axios.get("https://fakestoreapi.com/products").then(function (response) {
+
+            response.data.forEach(function (data) {
+
+                var col = document.createElement("div");
+                row1.appendChild(col)
+                col.classList.add("col-12")
+                col.classList.add("col-md-6")
+                col.classList.add("col-lg-3")
+
+                var box1 = document.createElement("div")
+                col.appendChild(box1)
+                box1.classList.add("box-1");
+
+                var imageBox = document.createElement("div");
+                box1.appendChild(imageBox);
+                imageBox.classList.add("image-box");
+                imageBox.style.backgroundColor = "rgba(30, 40, 50, 0.05)";
+
+                // create a new images
+                var img = document.createElement("img");
+                // Create a new attribute object
+                var src = document.createAttribute("src");
+                // Set the name of the attribute
+                src.name = "src";
+                // Set the value of the attribute
+                src.value = data.image;
+                img.attributes.setNamedItem(src);
+                imageBox.appendChild(img);
+                img.style.width = "100%";
+                img.style.height = "250px";
+                imageBox.style.marginBottom = "18px";
+
+                var h6 = document.createElement("h6")
+                box1.appendChild(h6)
+                h6.innerText = data.title;
+                h6.style.height = "50px";
+                
+                var priceBox = document.createElement("div");
+                box1.appendChild(priceBox)
+                priceBox.classList.add("d-flex");
+                priceBox.classList.add("align-items-center");
+                priceBox.classList.add("justify-content-between");
+
+                var categoryes = document.createElement("p") 
+                priceBox.appendChild(categoryes);
+                categoryes.style.marginBottom = "0px"
+                categoryes.innerText = data.category;
+
+                var span = document.createElement("span")
+                priceBox.appendChild(span);
+                span.innerText = "$" + data.price;
+                span.style.color = "green";
+
+
+                if (data.category == "men's clothing") {
+
+                    var col = document.createElement("div");
+                    row2.appendChild(col)
+                    col.classList.add("col-12")
+                    col.classList.add("col-md-6")
+                    col.classList.add("col-lg-3")
+
+                    var box1 = document.createElement("div")
+                    col.appendChild(box1)
+                    box1.classList.add("box-1");
+
+                    var imageBox = document.createElement("div");
+                    box1.appendChild(imageBox);
+                    imageBox.classList.add("image-box");
+                    imageBox.style.backgroundColor = "rgba(30, 40, 50, 0.05)";
+
+                    // create a new images
+                    var img = document.createElement("img");
+                    // Create a new attribute object
+                    var src = document.createAttribute("src");
+                    // Set the name of the attribute
+                    src.name = "src";
+                    // Set the value of the attribute
+                    src.value = data.image;
+                    img.attributes.setNamedItem(src);
+                    imageBox.appendChild(img);
+                    img.style.width = "100%";
+                    img.style.height = "250px";
+                    imageBox.style.marginBottom = "18px";
+
+                    var h6 = document.createElement("h6")
+                    box1.appendChild(h6)
+                    h6.innerText = data.title;
+                    h6.style.height = "50px";
+
+                    var priceBox = document.createElement("div");
+                    box1.appendChild(priceBox)
+                    priceBox.classList.add("d-flex");
+                    priceBox.classList.add("align-items-center");
+                    priceBox.classList.add("justify-content-between");
+
+                    var categoryes = document.createElement("p")
+                    priceBox.appendChild(categoryes);
+                    categoryes.style.marginBottom = "0px"
+                    categoryes.innerText = data.category;
+
+                    var span = document.createElement("span")
+                    priceBox.appendChild(span);
+                    span.innerText = "$" + data.price;
+                    span.style.color = "green";
+                }else if (data.category == "women's clothing") {
+
+                    var col = document.createElement("div");
+                    row3.appendChild(col)
+                    col.classList.add("col-12")
+                    col.classList.add("col-md-6")
+                    col.classList.add("col-lg-3")
+
+                    var box1 = document.createElement("div")
+                    col.appendChild(box1)
+                    box1.classList.add("box-1");
+
+                    var imageBox = document.createElement("div");
+                    box1.appendChild(imageBox);
+                    imageBox.classList.add("image-box");
+                    imageBox.style.backgroundColor = "rgba(30, 40, 50, 0.05)";
+
+                    // create a new images
+                    var img = document.createElement("img");
+                    // Create a new attribute object
+                    var src = document.createAttribute("src");
+                    // Set the name of the attribute
+                    src.name = "src";
+                    // Set the value of the attribute
+                    src.value = data.image;
+                    img.attributes.setNamedItem(src);
+                    imageBox.appendChild(img);
+                    img.style.width = "100%";
+                    img.style.height = "250px";
+                    imageBox.style.marginBottom = "18px";
+
+                    var h6 = document.createElement("h6")
+                    box1.appendChild(h6)
+                    h6.innerText = data.title;
+                    h6.style.height = "50px";
+
+                    var priceBox = document.createElement("div");
+                    box1.appendChild(priceBox)
+                    priceBox.classList.add("d-flex");
+                    priceBox.classList.add("align-items-center");
+                    priceBox.classList.add("justify-content-between");
+
+                    var categoryes = document.createElement("p")
+                    priceBox.appendChild(categoryes);
+                    categoryes.style.marginBottom = "0px"
+                    categoryes.innerText = data.category;
+
+                    var span = document.createElement("span")
+                    priceBox.appendChild(span);
+                    span.innerText = "$" + data.price;
+                    span.style.color = "green";
+                }else if (data.category == "electronics") {
+
+                    var col = document.createElement("div");
+                    row4.appendChild(col)
+                    col.classList.add("col-12")
+                    col.classList.add("col-md-6")
+                    col.classList.add("col-lg-3")
+
+                    var box1 = document.createElement("div")
+                    col.appendChild(box1)
+                    box1.classList.add("box-1");
+
+                    var imageBox = document.createElement("div");
+                    box1.appendChild(imageBox);
+                    imageBox.classList.add("image-box");
+                    imageBox.style.backgroundColor = "rgba(30, 40, 50, 0.05)";
+
+                    // create a new images
+                    var img = document.createElement("img");
+                    // Create a new attribute object
+                    var src = document.createAttribute("src");
+                    // Set the name of the attribute
+                    src.name = "src";
+                    // Set the value of the attribute
+                    src.value = data.image;
+                    img.attributes.setNamedItem(src);
+                    imageBox.appendChild(img);
+                    img.style.width = "100%";
+                    img.style.height = "250px";
+                    imageBox.style.marginBottom = "18px";
+
+                    var h6 = document.createElement("h6")
+                    box1.appendChild(h6)
+                    h6.innerText = data.title;
+                    h6.style.height = "50px";
+
+                    var priceBox = document.createElement("div");
+                    box1.appendChild(priceBox)
+                    priceBox.classList.add("d-flex");
+                    priceBox.classList.add("align-items-center");
+                    priceBox.classList.add("justify-content-between");
+
+                    var categoryes = document.createElement("p")
+                    priceBox.appendChild(categoryes);
+                    categoryes.style.marginBottom = "0px"
+                    categoryes.innerText = data.category;
+
+                    var span = document.createElement("span")
+                    priceBox.appendChild(span);
+                    span.innerText = "$" + data.price;
+                    span.style.color = "green";
+                }else if (data.category == "jewelery") {
+
+                    var col = document.createElement("div");
+                    row5.appendChild(col)
+                    col.classList.add("col-12")
+                    col.classList.add("col-md-6")
+                    col.classList.add("col-lg-3")
+
+                    var box1 = document.createElement("div")
+                    col.appendChild(box1)
+                    box1.classList.add("box-1");
+
+                    var imageBox = document.createElement("div");
+                    box1.appendChild(imageBox);
+                    imageBox.classList.add("image-box");
+                    imageBox.style.backgroundColor = "rgba(30, 40, 50, 0.05)";
+
+                    // create a new images
+                    var img = document.createElement("img");
+                    // Create a new attribute object
+                    var src = document.createAttribute("src");
+                    // Set the name of the attribute
+                    src.name = "src";
+                    // Set the value of the attribute
+                    src.value = data.image;
+                    img.attributes.setNamedItem(src);
+                    imageBox.appendChild(img);
+                    img.style.width = "100%";
+                    img.style.height = "250px";
+                    imageBox.style.marginBottom = "18px";
+
+                    var h6 = document.createElement("h6")
+                    box1.appendChild(h6)
+                    h6.innerText = data.title;
+                    h6.style.height = "50px";
+
+                    var priceBox = document.createElement("div");
+                    box1.appendChild(priceBox)
+                    priceBox.classList.add("d-flex");
+                    priceBox.classList.add("align-items-center");
+                    priceBox.classList.add("justify-content-between");
+
+                    var categoryes = document.createElement("p")
+                    priceBox.appendChild(categoryes);
+                    categoryes.style.marginBottom = "0px"
+                    categoryes.innerText = data.category;
+
+                    var span = document.createElement("span")
+                    priceBox.appendChild(span);
+                    span.innerText = "$" + data.price;
+                    span.style.color = "green";
+                }
+            })
+
+
+
+
+
+
+        })
+
+
+
+    </script>
+</body>
+
+</html>
